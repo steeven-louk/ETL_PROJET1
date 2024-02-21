@@ -1,0 +1,85 @@
+{
+    "name": "États-Unis d'Amérique" ,
+    "topLevelDomain": [
+        ".nous"
+    ],
+    "alpha2Code": "États-Unis" ,
+    "alpha3Code": "Etats-Unis" ,
+    "codesd'appel": [
+        "1"
+    ],
+    "capitale": "Washington, DC" ,
+    "altSpellings": [
+        "États-Unis" ,
+         "États-Unis" ,
+         "États-Unis d'Amérique"
+    ],
+    "region": "Amériques" ,
+    "subregion": "Amérique du Nord" ,
+    "population": 323947000 ,
+    "latlng": [
+        38 ,
+         -97
+    ],
+    "demonym": "Américain" ,
+    "zone":   9629091 ,
+    "gini":   48 ,
+    "fuseaux horaires": [
+        "UTC-12:00" ,
+         "UTC-11:00" ,
+         "UTC-10:00" ,
+         "UTC-09:00" ,
+         "UTC-08:00" ,
+         "UTC-07:00" ,
+         "UTC -06:00" ,
+         "UTC-05:00" ,
+         "UTC-04:00" ,
+         "UTC+10:00" ,
+         "UTC+12:00"
+    ],
+    "les frontières": [
+        "CAN" ,
+         "MEX"
+    ],
+    "nativeName": "États-Unis" ,
+    "numericCode": "840" ,
+    "devises": [
+        {
+            "code": "USD" ,
+            "name": "États-Unis dollars" ,
+            "symbole": "$"
+        }
+    ],
+    "langues": [
+        {
+            "iso639_1": "fr" ,
+            "iso639_2": "fra" ,
+            "name": "Anglais" ,
+            "nativeName": "Anglais "
+        }
+    ],
+    "traductions": {
+        "br": "États-Unis" ,
+        "de": "Vereinigte Staaten von Amérique" ,
+        "es": "États-Unis",
+        "fa": "u0627u06ccu0627u0644u0627u062a u0645u062au062du062fu0647u0622u0645u0631 u06ccu06a9u0627" ,
+        "fr": "u00c9tats-Unis" ,
+        "hr": "Sjedinjene Ameriu010dke Dru017eave" ,
+        "it": "États-Unis Amérique" ,
+        "ja": "u30a2u30e1u30eau30ab u5408u8846u56fd" ,
+        "nl": "Verenigde Staten" ,
+        "pt": "États-Unis"
+    },
+    "flag": "https://api.countrylayer    .com/v2/" ,
+    "Blocsrégionaux": [
+        {
+            "acronyme": "ALENA" ,
+            "name": "Amérique du Nord            Accord de libre-échange" ,
+            "Autres noms": [
+                "Traité de Libre  Commerce de Amu00e9rica  del Norte" ,
+                "Accord de Libre-u00e9change Nord-Am u00e9ricain"
+            ]
+        }
+    ],
+    "cioc":   "États-Unis"
+}
