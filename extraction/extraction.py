@@ -7,17 +7,18 @@ json_url = '../data/ville.json'
 
 
 ######## EXTRACTION DE FICHIER ###########
-def extract_csv(data) -> str:
+def extract_csv(data):
     return pd.read_csv(data)
 
 
 def extract__json(data):  # non fonctionnel
-    return pd.read_json(data)
+    return pd.read_json(data, lines=True)
 
 
 def extract_json(path):
     with open(path, 'r') as file:
         data = json.load(file)
+        return data
 
 
 def extract_from_api(api_url):
@@ -29,8 +30,9 @@ def extract_from_api(api_url):
 def extract_from_xml(data):
     return pd.read_xml(data)
 
-# def extract_from_database(data):
-# return pd.read_sql(data)
+def extract_from_database(data):
+    pass
+
 
 ######## EXTRACTION DE FICHIER ###########
 # test_api = extract_from_api("https://randomuser.me/api/")
