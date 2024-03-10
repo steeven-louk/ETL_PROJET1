@@ -1,42 +1,82 @@
-# Supprimer les valeurs manquantes
-# def handle_missing_values(data):
-#    filled_data = data.fillna(data.median())
-#    return filled_data
-
 import pandas as pd
 
 
 # Fonction pour filtrer les données
-def filter_data(data, condition):
-    filtered_data = data.query(condition)
-    return filtered_data
+def filter_data(data, source_config):
+    try:
+        condition = source_config['condition']
+        filtered_data = data.query(condition)
+        return filtered_data
+    except Exception as e:
+        print("Error while filtering: ", e)
 
 
 # Fonction pour traiter les valeurs manquantes
 def handle_missing_values(data):
-    filled_data = data.fillna(data.median())
-    return filled_data
-
-
-# Fonction pour traiter les valeurs aberrantes
-def handle_outliers(data):
-    clean_data = data[(data['value'] >= data['lower_bound']) & (data['value'] <= data['upper_bound'])]
-    return clean_data
+    try:
+        filled_data = data.dropna()
+        return filled_data
+    except Exception as e:
+        print("Handle_missing_values Error: ", e)
 
 
 # Fonction pour effectuer un calcul
-def perform_calculation(data, calculation):
-    result = eval(calculation)
-    return result
+def perform_calculation(source_config, data):
+    try:
+        for column in data.columns:
+            if not pd.api.types.is_numeric_dtype(data[column]):
+                data[column] = pd.to_numeric(data[column], errors='coerce')
+
+        calculation = source_config['calculation']
+        result = data.eval(calculation)
+        return result
+    except Exception as e:
+        print("perform_calculation Error: ", e)
 
 
 # Fonction pour normaliser les données
 def normalize_data(data):
-    normalized_data = (data - data.mean()) / data.std()
-    return normalized_data
+    try:
+        if isinstance(data, pd.DataFrame):
+            numeric_columns = data.select_dtypes(include=['float64', 'int64']).columns
+            data[numeric_columns] = data[numeric_columns].apply(pd.to_numeric, errors='coerce')
+
+            normalized_data = (data - data.mean()) / data.std()
+            return normalized_data
+        else:
+            print("Error: Data is not a DataFrame.")
+            return data
+    except Exception as e:
+        print("Normalize Error: ", e)
+        return data
+
+
+def merge_data(data1, data2, common_column):
+    # Fusion des sources de données
+    try:
+        merged_data = pd.merge(data1, data2, on=common_column)
+        return merged_data
+    except Exception as e:
+        print("Merged Error: ", e)
 
 
 # Fonction pour ajouter un attribut aux données
-def add_attribute(data, attribute_name, attribute_value):
-    data[attribute_name] = attribute_value
-    return data
+def add_attribute(source_config, data):
+    try:
+        attribute_name = source_config['attribute_name']
+        attribute_value = source_config['attribute_value']
+        data[attribute_name] = attribute_value
+        return data
+    except Exception as e:
+        print("add attribute Error: ", e)
+
+
+
+
+
+def clean_balance(data):
+    try:
+        data['balance'] = data['balance'].apply(lambda x: float(x.replace('$', '').replace(',', '')))
+        return data
+    except Exception as e:
+        return print("Clean Balance Error: ", e)

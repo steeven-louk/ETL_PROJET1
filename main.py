@@ -1,11 +1,13 @@
-import pandas as pd
+from pipeline.pipeline import execute_pipeline
 
-def extract_data(data):
-    return pd.read_csv(data)
-client = pd.read_csv('./data/client1.csv')
-client2 = pd.read_csv('data/client2.csv')
 
-data = extract_data('./data/client1.csv')
-print(data.head())
+def main():
+    # chemin vers le fichier de configuration yaml du pipeline
+    pipeline_file = "./config/pipeplane_config.yaml"
 
-client.to_json('./extraction', orient="records")
+    # execution du pipeline
+    execute_pipeline(pipeline_file)
+
+
+if __name__ == "__main__":
+    main()

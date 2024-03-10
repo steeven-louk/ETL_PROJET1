@@ -20,4 +20,12 @@
       an evil sorceress, and her own childhood to become queen
       of the world.</Description>
    </Book>
+      <Book id="bk103">
+      <Author>Jhon, Doe</Author>
+      <Title>Might Rain</Title>
+      <Genre>Horro</Genre>
+      <Price>10.95</Price>
+      <PublishDate>2000-10-16</PublishDate>
+      <Description></Description>
+   </Book>
 </Catalog>
