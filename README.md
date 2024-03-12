@@ -9,15 +9,24 @@ Le projet est structuré de la manière suivante :
 
 - `extraction/`: Ce répertoire contient les scripts pour extraire les données à partir de différentes sources telles que des fichiers CSV, JSON, XML, des bases de données, etc.
 
+
 - `transformation/`: Ce répertoire contient les scripts pour transformer les données extraites selon les besoins spécifiques du projet. Cela peut inclure le nettoyage des données, la normalisation, l'agrégation, etc.
+
 
 - `loading/`: Ce répertoire contient les scripts pour charger les données transformées dans différentes destinations telles que des fichiers CSV, JSON, XML, des bases de données, etc.
 
+
 - `pipeline.py`: Ce fichier définit le pipeline ETL qui spécifie l'ordre dans lequel les opérations d'extraction, de transformation et de chargement doivent être effectuées.
 
-- `config.yaml`: Ce fichier contient la configuration du pipeline ETL, y compris les sources de données, les transformations à appliquer et les destinations de chargement.
 
-- `automation.py`: Ce fichier est responsable de l'exécution automatique du pipeline ETL en lisant la configuration à partir de `config.yaml` et en appelant les fonctions appropriées pour exécuter chaque étape du pipeline.
+- `config.pipeplane_config`: Ce fichier contient la configuration du pipeline ETL, y compris les sources de données, les transformations à appliquer et les destinations de chargement.
+
+
+- `main.py`: Ce fichier est responsable de l'exécution automatique du pipeline ETL en lisant la configuration à partir de `config.pipeplane_config` et en appelant les fonctions appropriées pour exécuter chaque étape du pipeline.
+
+
+- `destination`: Ce dossier contient les fichiers transformer et modifier
+
 
 - `README.md`: Ce fichier, le README, fournit des informations sur le projet, son objectif, sa structure et des instructions sur la façon de l'exécuter.
 
