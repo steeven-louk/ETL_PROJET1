@@ -22,12 +22,6 @@ def save_to_csv(data, path):
 
 
 # sauvegarder en fichier json
-# def save_to_json(data, path):
-#    try:
-#        #print("json print output :", data.to_json(path))
-#        return data.to_json(path, orient="records", lines=True)
-#    except Exception as e:
-#        print("Save to Json Error: ", e)
 def save_to_json(data, path):
     print("Save To JSON Error :", data)
     if data is not None and isinstance(data, pd.DataFrame):
