@@ -1,8 +1,11 @@
 import yaml
-from extraction.extraction import extract_json, extract_csv, extract_from_xml
-from loading.loading import save_to_json, save_to_xml, save_to_csv
+
+from extraction.extraction import extract_json, extract_csv, extract_from_xml, extract_from_api, extract_from_database
+
+from loading.loading import save_to_json, save_to_xml, save_to_csv, save_to_database
+
 from transformation.transformation import filter_data, normalize_data, add_attribute, perform_calculation, \
-    clean_balance, handle_missing_values, merge_data
+    clean_balance, handle_missing_values, merge_data, filter_data_from_database
 
 
 def extract_data(source_config):
@@ -14,8 +17,13 @@ def extract_data(source_config):
             return extract_json(source_config['path'])
         elif source_config['format'] == 'xml':
             return extract_from_xml(source_config['path'])
+
         else:
             raise ValueError("Unsupported file format")
+    elif source_type == 'api':
+        return extract_from_api(source_config['url'])
+    elif source_type == 'database':
+        return extract_from_database(source_config['connection_params'], source_config['query'])
     else:
         raise ValueError("Unsupported source type")
 
@@ -23,14 +31,15 @@ def extract_data(source_config):
 def apply_transformation(source_config, transformed_data):
     source_type = source_config['type']
     if source_type == 'merge_data':
-        return merge_data(transformed_data, source_config)
+        return merge_data(source_config, transformed_data)
     elif source_type == 'filter':
         return filter_data(transformed_data, source_config)
     elif source_type == 'clean_balance':
         return clean_balance(transformed_data)
     elif source_type == 'handle_missing_values':
         return handle_missing_values(transformed_data)
-
+    #elif source_type =="filter_data_from_database":
+     #   return filter_data_from_database(connection_string, table_name, condition)
     elif source_type == 'add_attribute':
         return add_attribute(source_config, transformed_data)
     elif source_type == 'perform_calculation':

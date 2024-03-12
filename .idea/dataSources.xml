@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="chinook" uuid="596a77ad-0024-4969-994e-ffa475340118">
-      <driver-ref>sqlite.xerial</driver-ref>
+    <data-source source="LOCAL" name="dm22_db" uuid="f9a5670b-39e9-4469-be9c-44d90e89cccf">
+      <driver-ref>mysql.8</driver-ref>
       <synchronize>true</synchronize>
-      <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
-      <jdbc-url>jdbc:sqlite:C:\Users\steeven Louk\OneDrive\Bureau\ETL-PROJET\data\chinook.db</jdbc-url>
+      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://localhost:3306/dm22?server=1&amp;db=dm22</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
   </component>

@@ -1,3 +1,4 @@
+import mysql.connector
 import pandas as pd
 
 
@@ -6,6 +7,7 @@ def filter_data(data, source_config):
     try:
         condition = source_config['condition']
         filtered_data = data.query(condition)
+        print(filtered_data.head())
         return filtered_data
     except Exception as e:
         print("Error while filtering: ", e)
@@ -23,9 +25,9 @@ def handle_missing_values(data):
 # Fonction pour effectuer un calcul
 def perform_calculation(source_config, data):
     try:
-        for column in data.columns:
-            if not pd.api.types.is_numeric_dtype(data[column]):
-                data[column] = pd.to_numeric(data[column], errors='coerce')
+        # for column in data.columns:
+        #   if not pd.api.types.is_numeric_dtype(data[column]):
+        #      data[column] = pd.to_numeric(data[column], errors='coerce')
 
         calculation = source_config['calculation']
         result = data.eval(calculation)
@@ -51,13 +53,14 @@ def normalize_data(data):
         return data
 
 
-def merge_data(data1, data2, common_column):
-    # Fusion des sources de données
+# Fusionner des sources de données
+def merge_data(source_config, data):
     try:
-        merged_data = pd.merge(data1, data2, on=common_column)
-        return merged_data
+        common_column = source_config['common_column']
+        other_file_path = source_config['with']
+        return pd.merge(data, pd.read_csv(other_file_path), on=common_column)
     except Exception as e:
-        print("Merged Error: ", e)
+        return print("Merge Error: ", e)
 
 
 # Fonction pour ajouter un attribut aux données
@@ -71,12 +74,33 @@ def add_attribute(source_config, data):
         print("add attribute Error: ", e)
 
 
-
-
-
+# Fonction pour supprimer le dollar des montant
 def clean_balance(data):
     try:
         data['balance'] = data['balance'].apply(lambda x: float(x.replace('$', '').replace(',', '')))
         return data
     except Exception as e:
         return print("Clean Balance Error: ", e)
+
+
+def filter_data_from_database(connection_string, table_name, condition):
+    try:
+        # Connexion à la base de données
+        connection = mysql.connector.connect(**connection_string)
+
+        # Construction de la requête SQL
+        query = f"SELECT * FROM {table_name} WHERE {condition};"
+
+        # Exécution de la requête et récupération des résultats dans un DataFrame
+        result = pd.read_sql_query(query, connection)
+        print(result)
+        return result
+
+    except Exception as e:
+        print(f"Error filtering data from database: {e}")
+        return None
+
+    finally:
+        # Fermeture de la connexion à la base de données
+        if connection:
+            connection.close()

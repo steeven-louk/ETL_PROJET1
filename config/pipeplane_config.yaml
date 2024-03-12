@@ -15,30 +15,38 @@ sources:
     format: xml
     path: ./data/book.xml
 
- # - name: source_api
- #   type: api
- #   url: https://dummyjson.com/users
+  - name: source_api
+    type: api
+    url: "https://jsonplaceholder.typicode.com/todos"
+
+  - name: source_mysql
+    type: database
+    connection_params:
+      host: "localhost"
+      user: "root"
+      password: ""
+      database: "dm22"
+    query: "SELECT * FROM membres"
 
 
 # TRANSFORMATION
 transformations:
 # Transformation pour source_csv
 
+
   - source: source_csv
     type: merge_data
-    with: './data/client2.csv'
-    on: genre
+    with: ./data/client2.csv
+    common_column: identifiant
 
   - source: source_csv
     type: filter
     condition: 'genre == "M"'
 
-
-
   - source: source_csv
     type: add_attribute
     attribute_name: salaire
-    attribute_value: 250
+    attribute_value: '250'
 
   - source: source_csv
     type: perform_calculation
@@ -90,31 +98,56 @@ transformations:
     type: normalize_data
 
 
+# Transformation pour source_api
+  - source: source_api
+    type: normalize_data
+
+  - source: source_api
+    type: handle_missing_values
+
+
+# Transformation pour source_mysql
+  - source: source_mysql
+    type: normalize_data
+
+  - source: source_mysql
+    type: handle_missing_values
+
+  #- source: source_mysql
+   # type: filter_data_from_database
+    #table_name: membres
+    #condition: "naissance > 1967-08-08"
+
 #DESTINATION
 destinations:
   # Destination pour source_database
-  ###- source: source_database
-    #destination: database
-    #table_name: "output_table_1"
-    #connection_string: "your_database_connection_string"
+  #- source: source_mysql
+ #   destination: mysql
+ #   connection_params:
+ #      host: 'localhost'
+ #      user: 'root'
+ #      password: ''
+ #      database: 'dm22'
+ #   table_name: 'update_members'
+
 
    #Destination pour source_csv
   - source: source_csv
     destination: csv
-    file_path: "./destination/output_2.csv"
+    file_path: "./destination/finale_client.csv"
 
    #Destination pour source_json
   - source: source_json
     destination: json
-    file_path: "./destination/fichier.json"
+    file_path: "./destination/finale_user.json"
 
    #Destination pour source_xml
   - source: source_xml
     destination: xml
-    file_path: "./destination/fichier.xml"
+    file_path: "./destination/finale_book.xml"
 
 
    #Destination pour source_api
- # - source: source_api
- #   destination: json
- #   file_path: "./destination/fichier_api.json"
+  - source: source_api
+    destination: json
+    file_path: "./destination/finale_api.json"

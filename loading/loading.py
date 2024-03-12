@@ -1,3 +1,5 @@
+import mysql.connector
+
 from extraction.extraction import extract_csv
 
 import pandas as pd
@@ -29,7 +31,7 @@ def save_to_csv(data, path):
 def save_to_json(data, path):
     print("Save To JSON Error :", data)
     if data is not None and isinstance(data, pd.DataFrame):
-        data.to_json(path, orient='records', lines=True)
+        data.to_json(path, orient="split", index=False)
         print(f"Les données ont été sauvegardées avec succès dans {path}")
     else:
         print("Erreur: Impossible de sauvegarder les données au format JSON. Les données sont invalides.")
@@ -44,5 +46,28 @@ def save_to_xml(data, path):
         print("Save to XML Error :", e)
 
 
-def load_to_database():
-    pass
+def save_to_database(data, connection_params, table_name):
+    try:
+        conn = mysql.connector.connect(**connection_params)
+        cursor = conn.cursor()
+
+        # Création de la table si elle n'existe pas déjà
+        create_table_query = f"CREATE TABLE IF NOT EXISTS {table_name} ("
+        for column in data.columns:
+            create_table_query += f"{column} VARCHAR(255), "
+        create_table_query = create_table_query[:-2] + ")"
+        cursor.execute(create_table_query)
+
+        # Insertion des données dans la table
+        for row in data.itertuples(index=False):
+            insert_query = f"INSERT INTO {table_name} VALUES ("
+            for value in row:
+                insert_query += f"'{value}', "
+            insert_query = insert_query[:-2] + ")"
+            cursor.execute(insert_query)
+
+        conn.commit()
+        conn.close()
+        print("Data saved to MySQL successfully.")
+    except mysql.connector.Error as err:
+        print("Error while connecting to MySQL", err)
