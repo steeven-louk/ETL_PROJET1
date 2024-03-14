@@ -7,7 +7,6 @@ def filter_data(data, source_config):
     try:
         condition = source_config['condition']
         filtered_data = data.query(condition)
-        print(filtered_data.head())
         return filtered_data
     except Exception as e:
         print("Error while filtering: ", e)
@@ -25,9 +24,9 @@ def handle_missing_values(data):
 # Fonction pour effectuer un calcul
 def perform_calculation(source_config, data):
     try:
-        # for column in data.columns:
-        #   if not pd.api.types.is_numeric_dtype(data[column]):
-        #      data[column] = pd.to_numeric(data[column], errors='coerce')
+        for column in data.columns:
+            if not pd.api.types.is_numeric_dtype(data[column]):
+                data[column] = pd.to_numeric(data[column], errors='coerce')
 
         calculation = source_config['calculation']
         result = data.eval(calculation)
@@ -83,23 +82,41 @@ def clean_balance(data):
         return print("Clean Balance Error: ", e)
 
 
-def filter_data_from_database(connection_string, table_name, condition):
+def filter_data_from_database(connection_params, table_name, condition):
     try:
-        # Connexion à la base de données
-        connection = mysql.connector.connect(**connection_string)
+        # Connexion à la base de données MySQL
+        connection = mysql.connector.connect(**connection_params)
 
-        # Construction de la requête SQL
+        # Construction de la requête SQL avec la condition de filtrage
         query = f"SELECT * FROM {table_name} WHERE {condition};"
-
         # Exécution de la requête et récupération des résultats dans un DataFrame
-        result = pd.read_sql_query(query, connection)
-        print(result)
+        cursor = connection.cursor()
+        cursor.execute(query)
+
+        # result = pd.read_sql(query, connection)
+        result = cursor.fetchall()
+        column_names = [i[0] for i in cursor.description]
+        result = pd.DataFrame(result, columns=column_names)
         return result
 
-    except Exception as e:
+    except mysql.connector.Error as e:
         print(f"Error filtering data from database: {e}")
         return None
 
+    finally:
+        # Fermeture de la connexion à la base de données
+        if connection and connection.is_connected():
+            connection.close()
+
+
+def drop_missing_values_from_database(data, connection_params, column_names):
+    try:
+        connection = mysql.connector.connect(**connection_params)
+        cleaned_data = data.dropna(subset=column_names)
+        return cleaned_data
+    except Exception as e:
+        print(f"Error dropping missing values from database: {e}")
+        return None
     finally:
         # Fermeture de la connexion à la base de données
         if connection:

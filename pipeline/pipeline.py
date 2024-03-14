@@ -5,9 +5,10 @@ from extraction.extraction import extract_json, extract_csv, extract_from_xml, e
 from loading.loading import save_to_json, save_to_xml, save_to_csv, save_to_database
 
 from transformation.transformation import filter_data, normalize_data, add_attribute, perform_calculation, \
-    clean_balance, handle_missing_values, merge_data, filter_data_from_database
+    clean_balance, handle_missing_values, merge_data, filter_data_from_database, drop_missing_values_from_database
 
 
+###Extraction de fichier en format DataFrame###
 def extract_data(source_config):
     source_type = source_config['type']
     if source_type == 'file':
@@ -17,9 +18,9 @@ def extract_data(source_config):
             return extract_json(source_config['path'])
         elif source_config['format'] == 'xml':
             return extract_from_xml(source_config['path'])
-
         else:
             raise ValueError("Unsupported file format")
+
     elif source_type == 'api':
         return extract_from_api(source_config['url'])
     elif source_type == 'database':
@@ -28,6 +29,7 @@ def extract_data(source_config):
         raise ValueError("Unsupported source type")
 
 
+###Logique de transformation de fichier###
 def apply_transformation(source_config, transformed_data):
     source_type = source_config['type']
     if source_type == 'merge_data':
@@ -38,8 +40,13 @@ def apply_transformation(source_config, transformed_data):
         return clean_balance(transformed_data)
     elif source_type == 'handle_missing_values':
         return handle_missing_values(transformed_data)
-    #elif source_type =="filter_data_from_database":
-     #   return filter_data_from_database(connection_string, table_name, condition)
+    elif source_type == 'drop_missing_values_from_database':
+        table_name = source_config['table_name']
+        column_names = source_config['column_names']
+        return drop_missing_values_from_database(transformed_data, source_config['connection_params'], column_names)
+    elif source_type == "filter_data_from_database":
+        return filter_data_from_database(source_config['connection_params'], source_config["table_name"],
+                                         source_config['condition'])
     elif source_type == 'add_attribute':
         return add_attribute(source_config, transformed_data)
     elif source_type == 'perform_calculation':
@@ -50,6 +57,7 @@ def apply_transformation(source_config, transformed_data):
         raise ValueError("Unsupported transformation type")
 
 
+###Logique d'enregistrement de fichier###
 def load_data(destination_config, data, destination):
     file_path = destination_config['file_path']
     if destination == 'json':
@@ -58,6 +66,8 @@ def load_data(destination_config, data, destination):
         save_to_csv(data, file_path)
     elif destination == 'xml':
         save_to_xml(data, file_path)
+    elif destination == 'mysql':
+        save_to_database(data, destination_config["connection_params"], destination_config["table_name"])
     else:
         raise ValueError("Unsupported destination type")
 
