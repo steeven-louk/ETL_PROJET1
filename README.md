@@ -28,11 +28,31 @@ Le projet est structuré de la manière suivante :
 - `destination`: Ce dossier contient les fichiers transformer et modifier
 
 
-- `README.md`: Ce fichier, le README, fournit des informations sur le projet, son objectif, sa structure et des instructions sur la façon de l'exécuter.
+- `data`: Ce dossier contient tout les fichiers de test
+
+
+- `README.md`: Le README, fournit des informations sur le projet, son objectif, sa structure et des instructions sur la façon de l'exécuter.
 
 ## Comment Exécuter le Projet
 
 1. Assurez-vous que Python est installé sur votre système.
-2. Installez toutes les dépendances du projet en exécutant `pip install -r requirements.txt`.
-3. Assurez-vous que les fichiers de données nécessaires sont présents dans les répertoires spécifiés dans `config.pipeplane_config.yaml`.
-4. Exécutez le fichier `main.py` en utilisant la commande `python main.py` pour lancer le pipeline ETL.
+
+2. Cloner ce dépôt dans votre environnement local :
+   ```bash
+   git clone https://github.com/steeven-louk/ETL_PROJET1.git
+
+3. Accéder au répertoire du projet :
+    ```bash
+    cd ETL_PROJET1
+
+4. Installez toutes les dépendances du projet en exécutant:
+    ```bash 
+   pip install -r requirements.txt.
+   
+5. Assurez-vous que les fichiers de données nécessaires sont présents dans les répertoires spécifiés dans 
+    ```bash
+    config.pipeplane_config.yaml.
+   
+6. Exécutez le fichier `main.py` en utilisant la commande `python main.py` pour lancer le pipeline ETL.
+
+7. NB: Le Projet a été fait sur Pycharm

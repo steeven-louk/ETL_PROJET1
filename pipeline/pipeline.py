@@ -32,16 +32,16 @@ def extract_data(source_config):
 ###Logique de transformation de fichier###
 def apply_transformation(source_config, transformed_data):
     source_type = source_config['type']
-    if source_type == 'merge_data':
+    if source_type == 'handle_missing_values':
+        return handle_missing_values(transformed_data)
+    elif source_type == 'merge_data':
         return merge_data(source_config, transformed_data)
     elif source_type == 'filter':
         return filter_data(transformed_data, source_config)
     elif source_type == 'clean_balance':
         return clean_balance(transformed_data)
-    elif source_type == 'handle_missing_values':
-        return handle_missing_values(transformed_data)
+
     elif source_type == 'drop_missing_values_from_database':
-        table_name = source_config['table_name']
         column_names = source_config['column_names']
         return drop_missing_values_from_database(transformed_data, source_config['connection_params'], column_names)
     elif source_type == "filter_data_from_database":

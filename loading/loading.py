@@ -54,7 +54,6 @@ def save_to_database(data, connection_params, table_name):
             for value in row:
                 insert_query += f"'{value}', "
             insert_query = insert_query[:-2] + ")"
-            print("inseert valuees: \n",insert_query)
             cursor.execute(insert_query)
 
         conn.commit()

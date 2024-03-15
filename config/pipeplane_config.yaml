@@ -36,8 +36,8 @@ transformations:
 
   - source: source_csv
     type: merge_data
-    with: ./data/client2.csv
-    common_column: identifiant
+    with: "./data/client2.csv"
+    common_column: "identifiant"
 
   - source: source_csv
     type: handle_missing_values
@@ -53,7 +53,7 @@ transformations:
 
   - source: source_csv
     type: perform_calculation
-    calculation: 'salaire * 15'
+    calculation: salaire * 15
 
   - source: source_csv
     type: normalize_data
@@ -104,7 +104,6 @@ transformations:
 
   - source: source_api
     type: handle_missing_values
-
 
 # Transformation pour source_mysql
   - source: source_mysql

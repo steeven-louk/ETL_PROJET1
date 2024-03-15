@@ -38,7 +38,6 @@ def extract_from_database(connection_params, query):
         cursor.execute(query)
         columns = cursor.column_names
         data = pd.DataFrame(cursor.fetchall(), columns=columns)
-        #print("database: ", data)
         conn.close()
         return data
     except mysql.connector.Error as err:

@@ -15,7 +15,7 @@ def filter_data(data, source_config):
 # Fonction pour traiter les valeurs manquantes
 def handle_missing_values(data):
     try:
-        filled_data = data.dropna()
+        filled_data = data.fillna(0)
         return filled_data
     except Exception as e:
         print("Handle_missing_values Error: ", e)
@@ -24,9 +24,11 @@ def handle_missing_values(data):
 # Fonction pour effectuer un calcul
 def perform_calculation(source_config, data):
     try:
-        for column in data.columns:
-            if not pd.api.types.is_numeric_dtype(data[column]):
-                data[column] = pd.to_numeric(data[column], errors='coerce')
+        processed_data = data.copy()
+
+        # Convertir les colonnes en données numériques
+        for column in processed_data.columns:
+            processed_data[column] = pd.to_numeric(processed_data[column], errors='coerce')
 
         calculation = source_config['calculation']
         result = data.eval(calculation)
@@ -55,9 +57,11 @@ def normalize_data(data):
 # Fusionner des sources de données
 def merge_data(source_config, data):
     try:
+        data = data.dropna()
         common_column = source_config['common_column']
         other_file_path = source_config['with']
-        return pd.merge(data, pd.read_csv(other_file_path), on=common_column)
+        result = pd.merge(data, pd.read_csv(other_file_path), on=common_column)
+        return result
     except Exception as e:
         return print("Merge Error: ", e)
 
