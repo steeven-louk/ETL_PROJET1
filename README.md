@@ -44,15 +44,12 @@ Le projet est structuré de la manière suivante :
 3. Accéder au répertoire du projet :
     ```bash
     cd ETL_PROJET1
-
-4. Installez toutes les dépendances du projet en exécutant:
-    ```bash 
-   pip install -r requirements.txt.
    
-5. Assurez-vous que les fichiers de données nécessaires sont présents dans les répertoires spécifiés dans 
+4. Assurez-vous que les fichiers de données nécessaires sont présents dans les répertoires spécifiés dans 
     ```bash
-    config.pipeplane_config.yaml.
+    config.pipeplane_config.yaml
+5. Importer la base de donnée `dm22` dans votre `phpmyadmin`
    
 6. Exécutez le fichier `main.py` en utilisant la commande `python main.py` pour lancer le pipeline ETL.
 
-7. NB: Le Projet a été fait sur Pycharm
+7. NB: Le Projet a été fait sur `Pycharm`
