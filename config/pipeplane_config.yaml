@@ -102,8 +102,6 @@ transformations:
   - source: source_api
     type: normalize_data
 
-  - source: source_api
-    type: handle_missing_values
 
 # Transformation pour source_mysql
   - source: source_mysql

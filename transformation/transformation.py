@@ -87,6 +87,7 @@ def clean_balance(data):
 
 
 def filter_data_from_database(connection_params, table_name, condition):
+    connection = None
     try:
         # Connexion à la base de données MySQL
         connection = mysql.connector.connect(**connection_params)
@@ -97,7 +98,6 @@ def filter_data_from_database(connection_params, table_name, condition):
         cursor = connection.cursor()
         cursor.execute(query)
 
-        # result = pd.read_sql(query, connection)
         result = cursor.fetchall()
         column_names = [i[0] for i in cursor.description]
         result = pd.DataFrame(result, columns=column_names)
@@ -114,9 +114,11 @@ def filter_data_from_database(connection_params, table_name, condition):
 
 
 def drop_missing_values_from_database(data, connection_params, column_names):
+    connection = None
     try:
         connection = mysql.connector.connect(**connection_params)
         cleaned_data = data.dropna(subset=column_names)
+        connection.commit()
         return cleaned_data
     except Exception as e:
         print(f"Error dropping missing values from database: {e}")

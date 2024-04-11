@@ -59,17 +59,17 @@ def apply_transformation(source_config, transformed_data):
 
 ###Logique d'enregistrement de fichier###
 def load_data(destination_config, data, destination):
-    file_path = destination_config['file_path']
-    if destination == 'json':
-        save_to_json(data, file_path)
-    elif destination == 'csv':
-        save_to_csv(data, file_path)
-    elif destination == 'xml':
-        save_to_xml(data, file_path)
-    elif destination == 'mysql':
-        save_to_database(data, destination_config["connection_params"], destination_config["table_name"])
-    else:
-        raise ValueError("Unsupported destination type")
+    match destination:
+        case 'json' if 'file_path' in destination_config:
+            save_to_json(data, destination_config['file_path'])
+        case 'csv' if 'file_path' in destination_config:
+            save_to_csv(data, destination_config['file_path'])
+        case 'xml' if 'file_path' in destination_config:
+            save_to_xml(data, destination_config['file_path'])
+        case 'mysql' if 'connection_params' in destination_config:
+            save_to_database(data, destination_config["connection_params"], destination_config["table_name"])
+        case _:
+            raise ValueError("Unsupported destination type")
 
 
 def execute_pipeline(pipeline_file):
