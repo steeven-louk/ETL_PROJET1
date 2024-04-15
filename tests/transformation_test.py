@@ -1,6 +1,6 @@
 import unittest
 
-from transformation.transformation import merge_data, handle_missing_values
+from transformation.transformation import merge_data, handle_missing_values, filter_data
 
 
 class TestTransformation(unittest.TestCase):
@@ -20,10 +20,11 @@ class TestTransformation(unittest.TestCase):
     def test_filter(self):
         source_data = {'identifiant': [1, 2, 3], 'genre': ['M', 'F', 'M']}
         condition = 'genre == "M"'
-        filtered_data = apply_transformation('filter', source_data, condition)
+        filtered_data = filter_data(source_data, condition)
         # Vérifier si les données ont été correctement filtrées selon la condition
 
     # Ajoutez d'autres méthodes de test pour les autres transformations...
+
 
 if __name__ == '__main__':
     unittest.main()
