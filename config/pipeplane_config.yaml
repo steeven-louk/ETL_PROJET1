@@ -53,7 +53,7 @@ transformations:
 
   - source: source_csv
     type: perform_calculation
-    calculation: salaire * 15
+    calculation: "salaire * 15"
 
   - source: source_csv
     type: normalize_data
