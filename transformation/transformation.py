@@ -15,7 +15,7 @@ def filter_data(data, source_config):
 # Fonction pour traiter les valeurs manquantes
 def handle_missing_values(data):
     try:
-        filled_data = data.fillna(0)
+        filled_data = data.fillna(0, inplace=True)
         return filled_data
     except Exception as e:
         print("Handle_missing_values Error: ", e)
@@ -57,7 +57,7 @@ def normalize_data(data):
 # Fusionner des sources de données
 def merge_data(source_config, data):
     try:
-        data = data.dropna()
+        data = data.fillna(0, inplace=True)
         common_column = source_config['common_column']
         other_file_path = source_config['with']
         result = pd.merge(data, pd.read_csv(other_file_path), on=common_column)
@@ -117,7 +117,7 @@ def drop_missing_values_from_database(data, connection_params, column_names):
     connection = None
     try:
         connection = mysql.connector.connect(**connection_params)
-        cleaned_data = data.dropna(subset=column_names)
+        cleaned_data = data.filna(subset=column_names, inplace = True)
         connection.commit()
         return cleaned_data
     except Exception as e:

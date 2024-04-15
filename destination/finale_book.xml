@@ -33,7 +33,7 @@
     <Genre>Horro</Genre>
     <Price>10.95</Price>
     <PublishDate>2000-10-16</PublishDate>
-    <Description/>
+    <Description>0</Description>
     <color>red, white, blue</color>
   </row>
 </data>

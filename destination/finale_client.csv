@@ -1,10 +1,10 @@
 identifiant,email,nom,genre,salaire
 0,LaurentDagenais@rhyta.com,Laurent Dagenais,M,250
-1,,M,,250
+1,0,M,0,250
 2,BeaufortLesage@einrot.com,Beaufort Lesage,M,250
 3,RussellDurand@armyspy.com,Russell Durand,M,250
-4,AlexisRiel@rhyta.com,,M,250
-5,LeonLapresse@cuvox.de,Leon Lapresse,,250
+4,AlexisRiel@rhyta.com,0,M,250
+5,LeonLapresse@cuvox.de,Leon Lapresse,0,250
 6,OrvilleRouthier@gustr.com,Orville Routhier,M,250
 7,AgramantPepin@dayrep.com,Agramant Pepin,M,250
 8,AiglentinaLambert@fleckens.hu,Aiglentina Lambert,F,250
